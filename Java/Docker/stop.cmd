@@ -1,0 +1,1 @@
+docker-compose -p newplatform.flexberry.gis-java down

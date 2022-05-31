@@ -1,0 +1,33 @@
+﻿services:
+    test-nginx:
+        image: nginx:alpine
+        ports:
+            - "80:80"
+        volumes:
+            - ./conf.d:/etc/nginx/conf.d    
+
+ 
+    ember-frontend:
+        image: newplatform.flexberry.gis-java/ember-frontend
+        ports:
+            - "8081:8080"
+            
+    java-backend:
+        image: newplatform.flexberry.gis-java/backend
+        build: ../src/main/webapp
+        environment:
+            DB_ADDR: app-postgres-db
+            DB_NAME: appdb
+            DB_USER: flexberryuser
+            DB_PASS: jhv
+        ports:
+            - "8082:8080"
+ 
+    app-postgres-db:
+        image: newplatform.flexberry.gis-java/postgre-sql
+        volumes:
+            - DB:/var/lib/pgsql/data/
+        ports:
+            - "5432:5432"
+volumes:
+  DB:
